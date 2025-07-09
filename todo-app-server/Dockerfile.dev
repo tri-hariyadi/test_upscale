@@ -1,0 +1,22 @@
+# Dockerfile.dev untuk pengembangan Go server
+FROM golang:1.24.1-alpine
+
+WORKDIR /app
+
+# Install tools
+RUN apk add --no-cache git curl
+
+# Install Air untuk hot reload
+RUN go install github.com/air-verse/air@latest
+
+# Copy go.mod dan go.sum dulu biar cache build efektif
+COPY go.mod go.sum ./
+RUN go mod download
+
+# Copy semua source code
+COPY . .
+
+# Expose port yang digunakan aplikasimu, misalnya 8080
+EXPOSE 8080
+
+CMD ["air", "-c", ".air.toml"]

@@ -1,0 +1,31 @@
+app:
+  name: Todo App
+  host: 0.0.0.0
+  port: 8080
+
+storage:
+  port: 8081
+  host: 0.0.0.0
+
+database:
+  host: postgres
+  port: 5432
+  user: root
+  password: secret
+  name: todo_app
+  MaxConns: 20
+  MinConns: 10
+  MaxConnIdleTime: 60
+  MaxConnLifetime: 10
+
+redis:
+  host: localhost
+  post: 6379
+  db: 0
+
+JWTSecret:
+  AccessSecret: secret123
+
+quotes:
+  apiKey: 1j5sey+Y40OoR0DKZqgbog==agb5aPG677M3fSr6
+  apiUrl: https://api.api-ninjas.com/v1/quotes

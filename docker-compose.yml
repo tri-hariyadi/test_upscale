@@ -1,0 +1,106 @@
+version: "3.8"
+
+services:
+  server:
+    build:
+      context: ./todo-app-server
+      dockerfile: Dockerfile
+    container_name: todo-server
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+    restart: on-failure
+    networks:
+      - todo-network
+
+  client:
+    build:
+      context: ./todo-app-client
+      dockerfile: Dockerfile
+    container_name: todo-client
+    ports:
+      - "5173:80"
+    depends_on:
+      - server
+    networks:
+      - todo-network
+
+  postgres:
+    image: postgres:15
+    container_name: todo-postgres
+    restart: always
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: secret
+      POSTGRES_DB: todo_app
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - todo-network
+
+volumes:
+  postgres_data:
+
+networks:
+  todo-network:
+
+#version: "3.8"
+#
+#services:
+#  server:
+#    build:
+#      context: ./todo-app-server
+#      dockerfile: Dockerfile.dev
+#    container_name: todo-server
+#    ports:
+#      - "8080:8080"
+#    volumes:
+#      - ./todo-app-server:/app  # bind mount untuk dev
+#      - /app/tmp       # hindari overwrite node_modules jika pakai Node
+#    depends_on:
+#      - postgres
+#    restart: on-failure
+#    networks:
+#      - todo-network
+#
+#  client:
+#    build:
+#      context: ./todo-app-client
+#      dockerfile: Dockerfile.dev
+#    container_name: todo-client
+#    ports:
+#      - "5173:5173"  # Vite default dev port
+#    volumes:
+#      - ./todo-app-client:/app
+#      - /app/node_modules
+#    working_dir: /app
+#    command: yarn dev  # Vite dev mode
+#    depends_on:
+#      - server
+#    networks:
+#      - todo-network
+#
+#  postgres:
+#    image: postgres:15
+#    container_name: todo-postgres
+#    restart: always
+#    environment:
+#      POSTGRES_USER: root
+#      POSTGRES_PASSWORD: secret
+#      POSTGRES_DB: todo_app
+#    ports:
+#      - "5432:5432"
+#    volumes:
+#      - postgres_data:/var/lib/postgresql/data
+#    networks:
+#      - todo-network
+#
+#volumes:
+#  postgres_data:
+#
+#networks:
+#  todo-network:
+

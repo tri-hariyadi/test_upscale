@@ -1,0 +1,26 @@
+name: CI
+
+on:
+  push:
+    paths:
+      - 'client/**'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Use node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '18.19.1'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run lint
+        run: npm run lint
