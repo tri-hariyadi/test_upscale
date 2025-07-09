@@ -29,9 +29,15 @@ jobs:
       - name: Install Railway CLI (new)
         run: npm install -g @railway/cli
 
-      - name: Login to Railway
+      - name: Railway Login
         working-directory: ./todo-app-server
-        run: railway login --token ${{ secrets.RAILWAY_TOKEN }}
+        run: railway login
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+
+      - name: Link Railway Project
+        working-directory: ./todo-app-server
+        run: railway link --project ${{ secrets.RAILWAY_PROJECT_ID }}
 
       - name: Debug folder
         working-directory: ./todo-app-server
@@ -50,7 +56,7 @@ jobs:
 
       - name: Deploy to Railway
         working-directory: ./todo-app-server
-        run: railway up
+        run: railway up --service ${{ secrets.RAILWAY_SERVICE_NAME }}
 
 #      - name: Login to Railway
 #        working-directory: ./todo-app-server
