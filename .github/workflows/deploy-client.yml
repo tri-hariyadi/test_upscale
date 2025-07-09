@@ -32,7 +32,7 @@ jobs:
 
       - name: Debug folder
         working-directory: ./todo-app-client
-        run: ls -lah && ls -lah todo-app-client
+        run: ls -lah
 
       - name: Build Project Artifacts
         working-directory: ./todo-app-client
