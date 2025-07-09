@@ -16,6 +16,9 @@ COPY . .
 # Run wire (auto-generate file)
 RUN #/go/bin/wire ./common/injector
 
+RUN ls -la /app/common/injector
+RUN cat /app/common/injector/wire_gen.go || echo "wire_gen.go not found"
+
 RUN CGO_ENABLED=0 GOOS=linux go build -o todo-app-server
 
 #FROM scratch
