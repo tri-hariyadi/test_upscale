@@ -83,6 +83,17 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.24.1'
+
+      - name: Install Wire
+        run: go install github.com/google/wire/cmd/wire@latest
+
+      - name: Generate Dependency Injection (Wire)
+        run: /home/runner/go/bin/wire ./common/injector
+
       - name: Create config.yaml from GitHub Secret
         working-directory: ./todo-app-server
         run: |

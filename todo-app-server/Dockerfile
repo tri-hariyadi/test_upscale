@@ -1,10 +1,10 @@
 FROM golang:1.24.1-alpine AS builder
 
 # Install git dan wire
-RUN apk add --no-cache git
+RUN #apk add --no-cache git
 
 # Install wire
-RUN go install github.com/google/wire/cmd/wire@latest
+RUN #go install github.com/google/wire/cmd/wire@latest
 
 WORKDIR /app
 
@@ -14,7 +14,7 @@ RUN go mod download
 COPY . .
 
 # Run wire (auto-generate file)
-RUN /go/bin/wire ./common/injector
+RUN #/go/bin/wire ./common/injector
 
 RUN CGO_ENABLED=0 GOOS=linux go build -o todo-app-server
 
