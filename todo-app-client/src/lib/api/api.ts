@@ -1,6 +1,7 @@
 import Axios, { type AxiosError, type AxiosRequestConfig, type AxiosResponse } from 'axios';
-import type { IApi, IApiRequestParams } from 'lib/api/types';
 import { toast } from 'react-toastify';
+
+import type { IApi, IApiRequestParams } from 'lib/api/types';
 
 class Api {
   private BASE_URL = 'https://authentic-fulfillment-production.up.railway.app/api/v1';

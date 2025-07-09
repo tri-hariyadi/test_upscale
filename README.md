@@ -44,11 +44,17 @@
 * Database: PostgreSQL
 * RESTful API
 
+#### Extra
+
+* Deployed to the platform publik frontend is deployed to vercel end backend is deployed to railway
+* Unit Test to Ensure Functions Work
+* Using CI/CD Github Action to auto deploy
+
 ### How to Run
 
 #### 1. Make sure `docker` and `docker-compose` is installed in your machine
 
-#### 2. In the todo-app-server make sure to COPY `config.example.yaml` to `config.yaml`
+#### 2. In the todo-app-server make sure to COPY `config.example.yaml` to `config.yaml` and in the client make sure API url is correct in `todo-app-client/src/lib/api/api.ts`
 
 #### 3. You can change the variable value, but make sure the variable matches the one in the docker-compos.yml environment, especially in the postgresql database environment.
 
@@ -60,8 +66,8 @@ docker-compose up -d --build
 
 ### If you want to run client and server applications separately, you can see the guide here:
 
-#### client
+#### client: [Run client application separately](https://github.com/tri-hariyadi/test_upscale/blob/master/todo-app-client/README.md)
 
-#### server
+#### server: [Run server application separately](https://github.com/tri-hariyadi/test_upscale/blob/master/todo-app-server/README.md)
 
 

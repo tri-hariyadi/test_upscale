@@ -51,7 +51,7 @@ yarn dev
 #### 4. open web app on http://localhost:5173/
 
 If you use `docker` and `docker-compose`, you can run a single package project and its server application with a single
-command without the hassle of running the client and server applications individually. Follow the guide here.
+command without the hassle of running the client and server applications individually. Follow the guide here: [Run Application Using docker-compose](https://github.com/tri-hariyadi/test_upscale/blob/master/README.md)
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
