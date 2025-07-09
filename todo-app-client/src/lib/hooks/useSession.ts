@@ -5,12 +5,11 @@ import { useUserStore } from 'store/AuthStore';
 
 const useSession = () => {
   const userStore = useUserStore();
-  const token = window.localStorage.getItem('access_token');
 
   useEffect(() => {
     const verify = async () => {
       userStore.setUserLoading(true);
-      const user = await api.verifyToken({ headers: { Cookie: `access_token=${token}` } });
+      const user = await api.verifyToken();
       if (user.data) {
         userStore.setUser(user.data);
       }

@@ -6,7 +6,24 @@ import type { IApi, IApiRequestParams } from 'lib/api/types';
 class Api {
   private BASE_URL = 'https://authentic-fulfillment-production.up.railway.app/api/v1';
   // private BASE_URL = 'http://localhost:8080/api/v1';
-  private instance = Axios.create({ timeout: 60000, baseURL: this.BASE_URL, withCredentials: true });
+  private instance = Axios.create({
+    timeout: 60000,
+    baseURL: this.BASE_URL,
+    withCredentials: true
+  });
+
+  constructor() {
+    this.instance.interceptors.request.use(
+      (config) => {
+        const token = localStorage.getItem('access_token');
+        if (token) {
+          config.headers.Authorization = `Bearer ${token}`;
+        }
+        return config;
+      },
+      (error) => Promise.reject(error)
+    );
+  }
 
   private request = async <T>(config: AxiosRequestConfig, params: IApiRequestParams): Promise<IApi<T>['Response']> => {
     const { isErrorless } = params;
@@ -89,8 +106,7 @@ class Api {
 
   logout = () => this.get({ url: '/auth/logout' });
 
-  verifyToken = (config?: AxiosRequestConfig) =>
-    this.get<IApi['UserProfile']>({ url: 'auth/verify-token', isErrorless: true }, config);
+  verifyToken = () => this.get<IApi['UserProfile']>({ url: 'auth/verify-token', isErrorless: true });
 
   createTodo = (payload: IApi['TodosRequest']) => this.post({ url: '/todos', payload });
 
