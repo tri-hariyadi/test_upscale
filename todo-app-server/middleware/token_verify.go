@@ -6,6 +6,7 @@ import (
 	"github.com/golang-jwt/jwt/v5"
 	"net/http"
 	"todo-app/common/config"
+	"todo-app/common/logger"
 	"todo-app/helpers/auth"
 	"todo-app/helpers/exception"
 	"todo-app/helpers/resp_handler"
@@ -18,6 +19,7 @@ func TokenVerifyMiddleware() func(http.Handler) http.Handler {
 
 			cookie, err := r.Cookie("access_token")
 			if err != nil {
+				logger.Logger.Error(err, cookie)
 				resp_handler.Panic(exception.NewUnauthorizedError("You don't have access, token is invalid"), "[TokenVerifyMiddleware]")
 			}
 
@@ -28,6 +30,7 @@ func TokenVerifyMiddleware() func(http.Handler) http.Handler {
 				return secret, nil
 			})
 			if err != nil || !token.Valid {
+				logger.Logger.Error(err, token.Valid)
 				resp_handler.Panic(exception.NewUnauthorizedError("You don't have access, token is invalid"), "[TokenVerifyMiddleware]")
 			}
 

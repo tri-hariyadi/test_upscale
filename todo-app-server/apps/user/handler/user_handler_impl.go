@@ -5,6 +5,7 @@ import (
 	"github.com/gorilla/mux"
 	"net/http"
 	"todo-app/apps/user/service"
+	"todo-app/common/config"
 	"todo-app/common/router"
 	"todo-app/helpers/auth"
 	"todo-app/helpers/resp_handler"
@@ -49,14 +50,22 @@ func (handler UserHandlerImpl) Register(w http.ResponseWriter, r *http.Request) 
 }
 
 func (handler UserHandlerImpl) Logout(w http.ResponseWriter, r *http.Request) {
+	var secure bool = false
+	var sameSite http.SameSite = http.SameSiteLaxMode
+
+	if config.AppConfig.App.Env == "production" {
+		secure = true
+		sameSite = http.SameSiteNoneMode
+	}
+
 	http.SetCookie(w, &http.Cookie{
 		Name:     "access_token",
 		Value:    "",
 		Path:     "/",
 		MaxAge:   -1,
 		HttpOnly: true,
-		Secure:   false,
-		SameSite: http.SameSiteLaxMode,
+		Secure:   secure,
+		SameSite: sameSite,
 	})
 }
 

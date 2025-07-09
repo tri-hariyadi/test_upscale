@@ -43,13 +43,21 @@ func (t *TokenAuthService) GenerateAccessToken(user model.User) (string, error) 
 }
 
 func SetTokenToCookie(w http.ResponseWriter, accessToken string) {
+	var secure bool = false
+	var sameSite http.SameSite = http.SameSiteLaxMode
+
+	if config.AppConfig.App.Env == "production" {
+		secure = true
+		sameSite = http.SameSiteNoneMode
+	}
+
 	http.SetCookie(w, &http.Cookie{
 		Name:     "access_token",
 		Value:    accessToken,
 		Path:     "/",
 		HttpOnly: true,
-		Secure:   false,
-		SameSite: http.SameSiteLaxMode,
+		Secure:   secure,
+		SameSite: sameSite,
 		MaxAge:   7 * 60 * 60,
 	})
 }
