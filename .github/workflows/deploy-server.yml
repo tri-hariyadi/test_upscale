@@ -21,7 +21,7 @@ jobs:
           go-version: '1.24.1'
 
       - name: Create config.yaml from GitHub Secret
-        working-directory: ./todo-app-client
+        working-directory: ./todo-app-server
         run: |
           mkdir -p ./config
           echo "${{ secrets.CONFIG_YAML }}" > ./config.yaml
@@ -30,11 +30,11 @@ jobs:
         run: yarn global add railway
 
       - name: Debug folder
-        working-directory: ./todo-app-client
+        working-directory: ./todo-app-server
         run: ls -lah
 
       - name: Run Database Migration
-        working-directory: ./todo-app-client
+        working-directory: ./todo-app-server
         run: |
           curl -L https://github.com/golang-migrate/migrate/releases/download/v4.18.3/migrate.linux-amd64.tar.gz \
             | tar -xz -C /usr/local/bin
@@ -45,9 +45,9 @@ jobs:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
       - name: Login to Railway
-        working-directory: ./todo-app-client
+        working-directory: ./todo-app-server
         run: railway login --token ${{ secrets.RAILWAY_TOKEN }}
 
       - name: Deploy to Railway
-        working-directory: ./todo-app-client
+        working-directory: ./todo-app-server
         run: railway up
