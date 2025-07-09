@@ -26,7 +26,6 @@ const Quote = () => {
 
   const quote = resource?.read();
   // const quote = {};
-  //Test CI/CD
   return (
     <blockquote className="border-l-4 border-[#78C0A8] py-[1.2em] pr-8 pl-14 font-inter-italic text-gray-700 my-4 relative bg-[#EDEDED] before:content-['“'] before:text-[#78C0A8] before:text-[4em] before:absolute before:left-3 before:-top-3">
       <Show>
