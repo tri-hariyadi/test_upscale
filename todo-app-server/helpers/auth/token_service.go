@@ -57,7 +57,6 @@ func SetTokenToCookie(w http.ResponseWriter, accessToken string) {
 		Name:     "access_token",
 		Value:    accessToken,
 		Path:     "/",
-		//Domain:   domain,
 		HttpOnly: true,
 		Secure:   true,
 		SameSite: http.SameSiteNoneMode,
