@@ -106,7 +106,7 @@ jobs:
 
       - name: Debug folder
         working-directory: ./todo-app-server
-        run: ls -lah
+        run: ls -lah ./common/injector
 
 #      - name: Run Database Migration
 #        working-directory: ./todo-app-server
