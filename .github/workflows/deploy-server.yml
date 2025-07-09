@@ -1,67 +1,3 @@
-#name: Deploy Go to Railway
-#
-#on:
-#  push:
-#    paths:
-#      - 'todo-app-server/**'
-#    branches:
-#      - master
-#
-#jobs:
-#  deploy:
-#    runs-on: ubuntu-latest
-#    container: ghcr.io/railwayapp/cli:latest
-#    env:
-#      SVC_ID: my-service-id
-#      RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
-#
-#    steps:
-#      - name: Checkout code
-#        uses: actions/checkout@v3
-#
-#      - name: Install Node.js
-#        uses: actions/setup-node@v3
-#        with:
-#          node-version: 22.17.0
-#
-#      - name: Create config.yaml from GitHub Secret
-#        working-directory: ./todo-app-server
-#        run: |
-#          mkdir -p ./config
-#          echo "${{ secrets.CONFIG_YAML }}" > ./config.yaml
-#
-#      - name: Install Railway CLI (new)
-#        run: npm install -g @railway/cli
-#
-#      - name: Railway Login
-#        working-directory: ./todo-app-server
-#        run: railway login
-#        env:
-#          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
-#
-#      - name: Link Railway Project
-#        working-directory: ./todo-app-server
-#        run: railway link --project ${{ secrets.RAILWAY_PROJECT_ID }}
-#
-#      - name: Debug folder
-#        working-directory: ./todo-app-server
-#        run: ls -lah
-#
-#      - name: Run Database Migration
-#        working-directory: ./todo-app-server
-#        run: |
-#          curl -L https://github.com/golang-migrate/migrate/releases/download/v4.18.3/migrate.linux-amd64.tar.gz \
-#            | tar -xz -C /usr/local/bin
-#          migrate -path ./common/database/migrations \
-#                  -database "${{ secrets.DATABASE_URL }}" \
-#                  up
-#        env:
-#          DATABASE_URL: ${{ secrets.DATABASE_URL }}
-#
-#      - name: Deploy to Railway
-#        working-directory: ./todo-app-server
-#        run: railway up --service ${{ secrets.RAILWAY_SERVICE_NAME }}
-
 name: Deploy Go to Railway
 
 on:
@@ -83,34 +19,34 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Setup Go
-        uses: actions/setup-go@v5
-        with:
-          go-version: '1.24.1'
-
-      - name: Install Wire
-        working-directory: ./todo-app-server
-        run: |
-          go install github.com/google/wire/cmd/wire@latest
-          echo "$(go env GOPATH)/bin" >> $GITHUB_PATH
-
-      - name: Generate Dependency Injection (Wire)
-        working-directory: ./todo-app-server
-        run: wire ./common/injector
-
-      - name: Create config.yaml from GitHub Secret
-        working-directory: ./todo-app-server
-        run: |
-          mkdir -p ./config
-          echo "${{ secrets.CONFIG_YAML }}" > ./config.yaml
-
-      - name: Debug folder
-        working-directory: ./todo-app-server
-        run: ls -lah ./common/injector
-
-      - name: Debug folder
-        working-directory: ./todo-app-server
-        run: cat ./common/injector/wire_gen.go
+#      - name: Setup Go
+#        uses: actions/setup-go@v5
+#        with:
+#          go-version: '1.24.1'
+#
+#      - name: Install Wire
+#        working-directory: ./todo-app-server
+#        run: |
+#          go install github.com/google/wire/cmd/wire@latest
+#          echo "$(go env GOPATH)/bin" >> $GITHUB_PATH
+#
+#      - name: Generate Dependency Injection (Wire)
+#        working-directory: ./todo-app-server
+#        run: wire ./common/injector
+#
+#      - name: Create config.yaml from GitHub Secret
+#        working-directory: ./todo-app-server
+#        run: |
+#          mkdir -p ./config
+#          echo "${{ secrets.CONFIG_YAML }}" > ./config.yaml
+#
+#      - name: Debug folder
+#        working-directory: ./todo-app-server
+#        run: ls -lah ./common/injector
+#
+#      - name: Debug folder
+#        working-directory: ./todo-app-server
+#        run: cat ./common/injector/wire_gen.go
 
 #      - name: Run Database Migration
 #        working-directory: ./todo-app-server

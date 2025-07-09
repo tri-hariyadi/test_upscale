@@ -4,7 +4,7 @@ services:
   server:
     build:
       context: ./todo-app-server
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.dev
     container_name: todo-server
     ports:
       - "8080:8080"
@@ -47,6 +47,7 @@ volumes:
 networks:
   todo-network:
 
+# Development Environtment
 #version: "3.8"
 #
 #services:

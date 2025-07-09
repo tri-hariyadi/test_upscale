@@ -1,10 +1,10 @@
 import Axios, { type AxiosError, type AxiosRequestConfig, type AxiosResponse } from 'axios';
+import type { IApi, IApiRequestParams } from 'lib/api/types';
 import { toast } from 'react-toastify';
 
-import type { IApi, IApiRequestParams } from 'lib/api/types';
-
 class Api {
-  private BASE_URL = 'http://localhost:8080/api/v1';
+  private BASE_URL = 'https://authentic-fulfillment-production.up.railway.app/api/v1';
+  // private BASE_URL = 'http://localhost:8080/api/v1';
   private instance = Axios.create({ timeout: 60000, baseURL: this.BASE_URL, withCredentials: true });
 
   private request = async <T>(config: AxiosRequestConfig, params: IApiRequestParams): Promise<IApi<T>['Response']> => {
