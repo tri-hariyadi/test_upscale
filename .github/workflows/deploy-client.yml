@@ -29,6 +29,9 @@ jobs:
       - name: Pull Vercel Environment Information
         run: cd todo-app-client && vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
 
+      - name: Debug folder
+        run: ls -lah && ls -lah todo-app-client
+
       - name: Build Project Artifacts
         run: cd todo-app-client && vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
 
