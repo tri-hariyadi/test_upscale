@@ -31,7 +31,7 @@ func TokenVerifyMiddleware() func(http.Handler) http.Handler {
 				resp_handler.Panic(exception.NewUnauthorizedError("You don't have access, token is invalid"), "[TokenVerifyMiddleware]")
 			}
 
-			token, err := jwt.ParseWithClaims(cookie.Value, &auth.CustomClaims{}, func(t *jwt.Token) (interface{}, error) {
+			token, err := jwt.ParseWithClaims(bearerToken[1], &auth.CustomClaims{}, func(t *jwt.Token) (interface{}, error) {
 				if _, ok := t.Method.(*jwt.SigningMethodHMAC); !ok {
 					return nil, errors.New("internal server error")
 				}
