@@ -2,8 +2,6 @@ name: CI
 
 on:
   push:
-    paths:
-      - 'todo-app-client/**'
 
 jobs:
   build:
