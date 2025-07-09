@@ -28,6 +28,9 @@ jobs:
       - name: Install Railway CLI
         run: yarn global add railway
 
+      - name: Debug folder
+        run: ls -lah
+
       - name: Run Database Migration
         run: |
           curl -L https://github.com/golang-migrate/migrate/releases/download/v4.18.3/migrate.linux-amd64.tar.gz \
