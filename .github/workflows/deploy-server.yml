@@ -1,0 +1,45 @@
+name: Deploy Go to Railway
+
+on:
+  push:
+    paths:
+      - 'todo-app-server/**'
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.24.1'
+
+      - name: Create config.yaml from GitHub Secret
+        run: |
+          mkdir -p ./config
+          echo "${{ secrets.CONFIG_YAML }}" > ./config.yaml
+
+      - name: Install Railway CLI
+        run: yarn global add railway
+
+      - name: Run Database Migration
+        run: |
+          curl -L https://github.com/golang-migrate/migrate/releases/download/v4.18.3/migrate.linux-amd64.tar.gz \
+            | tar -xz -C /usr/local/bin
+          migrate -path ./common/database/migrations \
+                  -database "${{ secrets.DATABASE_URL }}" \
+                  up
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+
+      - name: Login to Railway
+        run: railway login --token ${{ secrets.RAILWAY_TOKEN }}
+
+      - name: Deploy to Railway
+        run: railway up

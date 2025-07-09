@@ -23,13 +23,17 @@ func ConnectDB() *pgxpool.Pool {
 	dsn := fmt.Sprintf("postgres://%s:%s@%s:%d/%s",
 		conf.User, conf.Password, conf.Host, conf.Port, conf.Name)
 
+	if config.AppConfig.App.Env == "production" {
+		dsn = config.AppConfig.Database.URLProduction
+	}
+
 	dbConfig, err := pgxpool.ParseConfig(dsn)
 	if err != nil {
 		logger.Logger.Fatalf("Error parsing database config: %v", err)
 	}
 
-	dbConfig.MaxConns = conf.MaxConns // sama seperti SetMaxOpenConns
-	dbConfig.MinConns = conf.MinConns // mirip SetMaxIdleConns
+	dbConfig.MaxConns = conf.MaxConns
+	dbConfig.MinConns = conf.MinConns
 	dbConfig.MaxConnIdleTime = time.Duration(conf.MaxConnIdleTime) * time.Minute
 	dbConfig.MaxConnLifetime = time.Duration(conf.MaxConnLifetime) * time.Minute
 

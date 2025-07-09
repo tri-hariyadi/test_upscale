@@ -10,6 +10,7 @@ type Config struct {
 		Name string
 		Host string
 		Port int
+		Env  string
 	}
 	Storage struct {
 		Port int
@@ -21,6 +22,7 @@ type Config struct {
 		User            string
 		Password        string
 		Name            string
+		URLProduction   string
 		MaxConns        int32
 		MinConns        int32
 		MaxConnIdleTime int32

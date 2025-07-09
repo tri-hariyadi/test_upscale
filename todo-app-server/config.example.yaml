@@ -2,6 +2,7 @@ app:
   name: Todo App
   host: 0.0.0.0
   port: 8080
+  env: production
 
 storage:
   port: 8081
@@ -13,15 +14,11 @@ database:
   user: root
   password: secret
   name: todo_app
+  URLProduction: postgresql://postgres:jsqJgAvHywrCLHDziZlhOEicYeIULTLk@centerbeam.proxy.rlwy.net:54886/railway
   MaxConns: 20
   MinConns: 10
   MaxConnIdleTime: 60
   MaxConnLifetime: 10
-
-redis:
-  host: localhost
-  post: 6379
-  db: 0
 
 JWTSecret:
   AccessSecret: secret123
