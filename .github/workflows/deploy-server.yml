@@ -90,11 +90,13 @@ jobs:
 
       - name: Install Wire
         working-directory: ./todo-app-server
-        run: go install github.com/google/wire/cmd/wire@latest
+        run: |
+          go install github.com/google/wire/cmd/wire@latest
+          echo "$(go env GOPATH)/bin" >> $GITHUB_PATH
 
       - name: Generate Dependency Injection (Wire)
         working-directory: ./todo-app-server
-        run: /home/runner/go/bin/wire ./common/injector
+        run: wire ./common/injector
 
       - name: Create config.yaml from GitHub Secret
         working-directory: ./todo-app-server
