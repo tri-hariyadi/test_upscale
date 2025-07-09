@@ -1,4 +1,4 @@
-name: Deploy to Vercel
+name: Deploy Client to Vercel
 
 env:
   VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
@@ -6,11 +6,11 @@ env:
 
 on:
   workflow_run:
-    workflows: ["CI"]
+    workflows: ["CI-Client"]
     types:
       - completed
     branches:
-      - main
+      - master
 
 jobs:
   build-and-deploy:
@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: client
+        working-directory: todo-app-client
 
     steps:
       - uses: actions/checkout@v2
