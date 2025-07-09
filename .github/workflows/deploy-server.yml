@@ -106,7 +106,11 @@ jobs:
 
       - name: Debug folder
         working-directory: ./todo-app-server
-        run: ls -lah ./common/injector
+        run: ls -lah ./common/injector && cat wire_gen.go
+
+      - name: Debug folder
+        working-directory: ./todo-app-server
+        run: cat ./common/injector/wire_gen.go
 
 #      - name: Run Database Migration
 #        working-directory: ./todo-app-server
