@@ -13,7 +13,8 @@ const SignIn = () => {
       if (!value) return;
       setIsLoading(true);
       const resp = await api.login(value);
-      if (resp.status) {
+      if (resp.status && resp.data?.access_token) {
+        window.localStorage.setItem('access_token', resp.data.access_token);
         navigate('/', { replace: true });
       }
       setIsLoading(false);

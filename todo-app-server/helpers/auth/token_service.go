@@ -43,23 +43,23 @@ func (t *TokenAuthService) GenerateAccessToken(user model.User) (string, error) 
 }
 
 func SetTokenToCookie(w http.ResponseWriter, accessToken string) {
-	//var secure bool = false
-	//var sameSite http.SameSite = http.SameSiteLaxMode
-	////var domain string = "localhost:5173"
-	//
-	//if config.AppConfig.App.Env == "production" {
-	//	secure = true
-	//	sameSite = http.SameSiteNoneMode
-	//	//domain = "test-upscale.vercel.app"
-	//}
+	var secure bool = false
+	var sameSite http.SameSite = http.SameSiteLaxMode
+	//var domain string = "localhost:5173"
+
+	if config.AppConfig.App.Env == "production" {
+		secure = true
+		sameSite = http.SameSiteNoneMode
+		//domain = "test-upscale.vercel.app"
+	}
 
 	http.SetCookie(w, &http.Cookie{
 		Name:     "access_token",
 		Value:    accessToken,
 		Path:     "/",
 		HttpOnly: true,
-		Secure:   true,
-		SameSite: http.SameSiteNoneMode,
+		Secure:   secure,
+		SameSite: sameSite,
 		MaxAge:   7 * 60 * 60,
 	})
 }

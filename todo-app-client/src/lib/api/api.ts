@@ -28,15 +28,16 @@ class Api {
     }
   };
 
-  private get = async <T>(params: IApiRequestParams) => {
+  private get = async <T>(params: IApiRequestParams, config?: AxiosRequestConfig) => {
     const { url, payload } = params;
-    const config: AxiosRequestConfig = {
+    const configuration: AxiosRequestConfig = {
+      ...config,
       method: 'get',
       url,
       params: payload || undefined
     };
 
-    return this.request<T>(config, params);
+    return this.request<T>(configuration, params);
   };
 
   private patch = async <T>(params: IApiRequestParams) => {
@@ -75,20 +76,21 @@ class Api {
   };
 
   register = (payload: IApi['RegisterRequest']) =>
-    this.post({
+    this.post<IApi['AuthResponse']>({
       url: '/auth/register',
       payload
     });
 
   login = (payload: IApi['LoginRequest']) =>
-    this.post({
+    this.post<IApi['AuthResponse']>({
       url: '/auth/login',
       payload
     });
 
   logout = () => this.get({ url: '/auth/logout' });
 
-  verifyToken = () => this.get<IApi['UserProfile']>({ url: 'auth/verify-token', isErrorless: true });
+  verifyToken = (config?: AxiosRequestConfig) =>
+    this.get<IApi['UserProfile']>({ url: 'auth/verify-token', isErrorless: true }, config);
 
   createTodo = (payload: IApi['TodosRequest']) => this.post({ url: '/todos', payload });
 

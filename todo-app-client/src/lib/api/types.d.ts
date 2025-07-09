@@ -12,6 +12,10 @@ export interface IApi<T = Any> {
     data?: T;
   };
 
+  AuthResponse: {
+    access_token: string;
+  };
+
   LoginRequest: {
     email: string;
     password: string;

@@ -36,7 +36,7 @@ func (handler UserHandlerImpl) Login(w http.ResponseWriter, r *http.Request) {
 
 	result := handler.UserService.Login(r.Context(), loginRequest)
 	auth.SetTokenToCookie(w, result.AccessToken);
-	//resp_handler.HandleSuccess(w, http.StatusOK, nil)
+	resp_handler.HandleSuccess(w, http.StatusOK, web.LoginResponse{AccessToken: result.AccessToken})
 }
 
 func (handler UserHandlerImpl) Register(w http.ResponseWriter, r *http.Request) {
@@ -46,7 +46,7 @@ func (handler UserHandlerImpl) Register(w http.ResponseWriter, r *http.Request) 
 
 	result := handler.UserService.Register(r.Context(), registerRequest)
 	auth.SetTokenToCookie(w, result.AccessToken);
-	resp_handler.HandleSuccess(w, http.StatusOK, nil)
+	resp_handler.HandleSuccess(w, http.StatusOK, web.LoginResponse{AccessToken: result.AccessToken})
 }
 
 func (handler UserHandlerImpl) Logout(w http.ResponseWriter, r *http.Request) {

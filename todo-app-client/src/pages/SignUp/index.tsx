@@ -12,7 +12,8 @@ const SignUp = () => {
     handleSubmit(async (value) => {
       if (!value) return;
       const resp = await api.register(value);
-      if (resp.status) {
+      if (resp.status && resp.data?.access_token) {
+        window.localStorage.setItem('access_token', resp.data.access_token);
         navigate('/', { replace: true });
       }
     });
