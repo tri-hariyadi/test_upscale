@@ -45,4 +45,4 @@ func ConnectDB() *pgxpool.Pool {
 	return pool
 }
 
-// Test debug snsnwj
+// Test debug

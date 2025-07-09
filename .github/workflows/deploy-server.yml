@@ -93,16 +93,16 @@ jobs:
         working-directory: ./todo-app-server
         run: ls -lah
 
-      - name: Run Database Migration
-        working-directory: ./todo-app-server
-        run: |
-          curl -L https://github.com/golang-migrate/migrate/releases/download/v4.18.3/migrate.linux-amd64.tar.gz \
-            | tar -xz -C /usr/local/bin
-          migrate -path ./common/database/migrations \
-                  -database "${{ secrets.DATABASE_URL }}" \
-                  up
-        env:
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+#      - name: Run Database Migration
+#        working-directory: ./todo-app-server
+#        run: |
+#          curl -L https://github.com/golang-migrate/migrate/releases/download/v4.18.3/migrate.linux-amd64.tar.gz \
+#            | tar -xz -C /usr/local/bin
+#          migrate -path ./common/database/migrations \
+#                  -database "${{ secrets.DATABASE_URL }}" \
+#                  up
+#        env:
+#          DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
       - uses: actions/checkout@v3
       - run: railway up --service=${{ env.SVC_ID }}
