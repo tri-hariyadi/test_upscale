@@ -22,6 +22,7 @@ const Profile = () => {
     const resp = await api.logout();
     if (resp.status) {
       setUser(null);
+      window.localStorage.removeItem('access_token');
     }
     window.location.replace('/sign-in');
   };
