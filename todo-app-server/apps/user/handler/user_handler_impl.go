@@ -52,16 +52,19 @@ func (handler UserHandlerImpl) Register(w http.ResponseWriter, r *http.Request) 
 func (handler UserHandlerImpl) Logout(w http.ResponseWriter, r *http.Request) {
 	var secure bool = false
 	var sameSite http.SameSite = http.SameSiteLaxMode
+	var domain string = "http://localhost:5173"
 
 	if config.AppConfig.App.Env == "production" {
 		secure = true
 		sameSite = http.SameSiteNoneMode
+		domain = "https://test-upscale.vercel.app"
 	}
 
 	http.SetCookie(w, &http.Cookie{
 		Name:     "access_token",
 		Value:    "",
 		Path:     "/",
+		Domain:   domain,
 		MaxAge:   -1,
 		HttpOnly: true,
 		Secure:   secure,
