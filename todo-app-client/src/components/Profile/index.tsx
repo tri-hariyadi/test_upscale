@@ -19,12 +19,10 @@ const Profile = () => {
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const handleLogout = async () => {
-    const resp = await api.logout();
-    if (resp.status) {
-      setUser(null);
-      window.localStorage.removeItem('access_token');
-    }
+    api.logout();
+    window.localStorage.removeItem('access_token');
     window.location.replace('/sign-in');
+    setUser(null);
   };
 
   useEffect(() => {

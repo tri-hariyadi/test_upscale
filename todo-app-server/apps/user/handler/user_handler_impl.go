@@ -70,6 +70,7 @@ func (handler UserHandlerImpl) Logout(w http.ResponseWriter, r *http.Request) {
 		Secure:   secure,
 		SameSite: sameSite,
 	})
+	resp_handler.HandleSuccess(w, http.StatusOK, nil)
 }
 
 func (handler UserHandlerImpl) VerifyToken(w http.ResponseWriter, r *http.Request) {
