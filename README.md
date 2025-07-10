@@ -36,6 +36,7 @@
 * Tool: Vite
 * UI: Tailwind css
 * Http request: Axios
+* [README](https://github.com/tri-hariyadi/test_upscale/blob/master/todo-app-client/README.md)
 
 #### Backend:
 
@@ -43,6 +44,8 @@
 * Framework: native Go
 * Database: PostgreSQL
 * RESTful API
+* Integration with public API [api-ninjas.com](https://api-ninjas.com/api/quotes) [GetQuote](https://github.com/tri-hariyadi/test_upscale/blob/master/todo-app-server/apps/todo/service/todo_service_impl.go)
+* [README](https://github.com/tri-hariyadi/test_upscale/blob/master/todo-app-server/README.md)
 
 #### Extra
 
@@ -63,6 +66,22 @@
 ```shell
 docker-compose up -d --build
 ```
+
+#### 5. If there is a problem with the application then it is necessary to run data migration
+
+first install golang-migrate
+```shell
+go install -tags 'database1,database2' github.com/golang-migrate/migrate/v4/cmd/migrate@latest
+```
+
+When installing Golang Migrate, an executable file named migrate is automatically created in the $GOPATH/bin/ folder.
+This migrate file is the Golang Migrate application that we will use to create the Database Migration. Next run the
+migration in path `common/database/migrations`
+
+```shell
+migrate -database "databasconnections" -path folder up
+Example: migrate -database "postgres://root:secret@localhost:5432/todo_app?sslmode=disable" -path common/database/migrations
+````
 
 ### If you want to run client and server applications separately, you can see the guide here:
 

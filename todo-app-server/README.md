@@ -83,12 +83,21 @@
 go mod tidy
 ```
 
-#### 2. Make sure database (postgreSQL) is ready and run migrate database
+#### 2. Make sure database (postgreSQL) is ready and run database migrations
+
+first install golang-migrate
+```shell
+go install -tags 'database1,database2' github.com/golang-migrate/migrate/v4/cmd/migrate@latest
+```
+
+When installing Golang Migrate, an executable file named migrate is automatically created in the `$GOPATH/bin/` folder.
+This migrate file is the Golang Migrate application that we will use to create the Database Migration. Next run the
+migration in path `common/database/migrations`
 
 ```shell
 migrate -database "databasconnections" -path folder up
 Example: migrate -database "postgres://root:secret@localhost:5432/todo_app?sslmode=disable" -path common/database/migrations up
-```
+````
 
 #### 3. For auto generate Dependency Injection code you need to install google wire
 
@@ -114,7 +123,14 @@ installed correctly
 
 #### 4. Make sure all environment variables are filled in `./config.yaml` so that the application can run properly.
 
-#### 5. Run application
+#### 5. Integation with public api [api-ninjas.com](https://api-ninjas.com/api/quotes), you kan change the API Key with your own api key
+```shell
+quotes:
+  apiKey: *****************
+  apiUrl: https://api.api-ninjas.com/v1/quotes
+```
+
+#### 6. Run application
 
 ```shell
 go run main.go
